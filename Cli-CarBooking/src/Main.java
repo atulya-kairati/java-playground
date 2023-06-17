@@ -1,9 +1,15 @@
 import dao.bookingdao.BookingDAO;
 import dao.cardao.CarDAO;
 import dao.userdao.UserDAO;
-import models.booking.Booking;
+import dao.userdao.UserDAOFromCSV;
 import models.car.Car;
 import models.user.User;
+import service.bookingservice.BookingService;
+import service.bookingservice.BookingServiceImpl;
+import service.carservice.CarService;
+import service.carservice.CarServiceImpl;
+import service.userservice.UserService;
+import service.userservice.UserServiceImpl;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -13,14 +19,19 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner((System.in));
 
-        UserDAO userDAO = new UserDAO();
+        UserDAO userDAO = new UserDAOFromCSV();
+        UserService userService = new UserServiceImpl(userDAO);
+
         CarDAO carDAO = new CarDAO();
+        CarService carService = new CarServiceImpl(carDAO);
+
         BookingDAO bookingDAO = new BookingDAO();
+        BookingService bookingService = new BookingServiceImpl(bookingDAO);
 
         System.out.println();
 
         String menuText = """
-                🚗 Bhosdi Car Booking Corner 🚗
+                🚗 Bhosdi Car Booking Corner (BCBC)🚗
                 1️⃣ -> Book Car
                 2️ -> View all cars booked by the user
                 3️⃣ -> View sll bookings
@@ -28,7 +39,7 @@ public class Main {
                 5️⃣ -> View all electric cars
                 6️⃣ -> View all users
                 7️⃣ -> Exit
-                """.stripIndent();
+                """;
 
         while(true){
             System.out.println(menuText);
@@ -37,49 +48,49 @@ public class Main {
             switch (choice){
                 case 1 -> {
                     System.out.println("Booking car, select id from available cars");
-                    System.out.println(Arrays.toString(carDAO.getAllCars()));
+                    System.out.println(Arrays.toString(carService.getAllCars()));
                     System.out.print("Selected car id: ");
                     String carId = in.next();
 
-                    Optional<Car> carMaybe = carDAO.getCarById(carId);
+                    Optional<Car> carMaybe = carService.getCarById(carId);
                     if (carMaybe.isEmpty()){
                         System.out.println("Car not found");
                         break;
                     }
                     Car car = carMaybe.get();
 
-                    System.out.println(Arrays.toString(userDAO.getAllUsers()));
+                    System.out.println(Arrays.toString(userService.getAllUsers()));
                     System.out.print("User id: ");
                     String userId = in.next();
 
-                    Optional<User> userMaybe = userDAO.getUserById(userId);
+                    Optional<User> userMaybe = userService.getUserById(userId);
                     if (userMaybe.isEmpty()){
                         System.out.println("Car not found");
                         break;
                     }
                     User user = userMaybe.get();
 
-                    bookingDAO.createBooking(car, user);
+                    bookingService.createBooking(car, user);
                     System.out.println(car.getBrand() + " booked for " + user.getName() + " ✅");
                 }
                 case 2 -> {
-                    System.out.println(Arrays.toString(userDAO.getAllUsers()));
+                    System.out.println(Arrays.toString(userService.getAllUsers()));
                     System.out.print("User id: ");
                     String id = in.next();
-                    System.out.println("Cars booked by " + userDAO.getUserById(id) + " :");
-                    System.out.println(Arrays.toString(bookingDAO.getAllCarBookedByUser(id)));
+                    System.out.println("Cars booked by " + userService.getUserById(id) + " :");
+                    System.out.println(Arrays.toString(bookingService.getAllCarBookedByUser(id)));
                 }
                 case 3 -> {
-                    System.out.println("All bookings: \n" + Arrays.toString(bookingDAO.getAllBookings()));
+                    System.out.println("All bookings: \n" + Arrays.toString(bookingService.getAllBookings()));
                 }
                 case 4 -> {
-                    System.out.println("All cars: \n" + Arrays.toString(carDAO.getAllCars()));
+                    System.out.println("All cars: \n" + Arrays.toString(carService.getAllCars()));
                 }
                 case 5 -> {
-                    System.out.println("All electric cars: \n" + Arrays.toString(carDAO.getAllElectricCars()));
+                    System.out.println("All electric cars: \n" + Arrays.toString(carService.getAllElectricCars()));
                 }
                 case 6 -> {
-                    System.out.println("All Users: \n" + Arrays.toString(userDAO.getAllUsers()));
+                    System.out.println("All Users: \n" + Arrays.toString(userService.getAllUsers()));
                 }
                 case 7 -> {
                     System.out.println("Bye 👋");

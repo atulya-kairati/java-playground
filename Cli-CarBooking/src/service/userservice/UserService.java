@@ -1,12 +1,10 @@
-package dao.userdao;
+package service.userservice;
 
 import models.user.User;
 
 import java.util.Optional;
 
-public interface UserDAO {
-
-    void loadUsers();
+public interface UserService {
     Optional<User> getUserById(String id);
 
     User[] getAllUsers();
