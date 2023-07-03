@@ -7,6 +7,7 @@ import models.booking.Booking;
 import models.car.Car;
 import models.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CarBookingServiceImpl implements CarBookingService{
@@ -32,12 +33,12 @@ public class CarBookingServiceImpl implements CarBookingService{
     }
 
     @Override
-    public Booking[] getAllBookings() {
+    public List<Booking> getAllBookings() {
         return bookingDAO.getAllBookings();
     }
 
     @Override
-    public Car[] getAllCarBookedByUser(String userId) {
+    public List<Car> getAllCarBookedByUser(String userId) {
         return bookingDAO.getAllCarBookedByUser(userId);
     }
 
@@ -47,12 +48,12 @@ public class CarBookingServiceImpl implements CarBookingService{
     }
 
     @Override
-    public Car[] getAllCars() {
+    public List<Car> getAllCars() {
         return carDAO.getAllCars();
     }
 
     @Override
-    public Car[] getAllElectricCars() {
+    public List<Car> getAllElectricCars() {
         return carDAO.getAllElectricCars();
     }
 
@@ -62,7 +63,7 @@ public class CarBookingServiceImpl implements CarBookingService{
     }
 
     @Override
-    public User[] getAllUsers() {
+    public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 }

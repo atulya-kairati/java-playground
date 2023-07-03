@@ -8,7 +8,7 @@ import java.util.*;
 
 public class UserDAOFromCSV implements UserDAO {
 
-    private User[] users;
+    private final List<User> users = new ArrayList<>();
 
     {
         loadUsers();
@@ -17,7 +17,7 @@ public class UserDAOFromCSV implements UserDAO {
     @Override
     public void loadUsers() {
         File file = new File("users.csv");
-        List<User> userList = new ArrayList<>();
+
         try (Scanner fileScanner = new Scanner(file)) {
             while (fileScanner.hasNext()){
                 String line = fileScanner.nextLine().trim();
@@ -27,13 +27,11 @@ public class UserDAOFromCSV implements UserDAO {
                 String name = data[1];
 
                 User user = new User(uuid, name);
-                userList.add(user);
+                users.add(user);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        users = userList.toArray(new User[0]);
     }
 
     @Override
@@ -41,17 +39,13 @@ public class UserDAOFromCSV implements UserDAO {
 
         UUID uuid = UUID.fromString(id);
 
-        for (User user : users) {
-            if (user == null) break;
-
-            if (user.getId().equals(uuid)) return Optional.of(user);
-        }
-
-        return Optional.empty();
+        return users.stream()
+                .filter(user -> user.getId().equals(uuid))
+                .findFirst();
     }
 
     @Override
-    public User[] getAllUsers() {
+    public List<User> getAllUsers() {
         return users;
     }
 }

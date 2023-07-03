@@ -7,7 +7,6 @@ import models.user.User;
 import service.carbookingservice.CarBookingService;
 import service.carbookingservice.CarBookingServiceImpl;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -19,6 +18,7 @@ public class Main {
         CarDAO carDAO = new CarDAO();
         BookingDAO bookingDAO = new BookingDAO();
 
+        // dependency injection
         CarBookingService carBookingService = new CarBookingServiceImpl(
                 userDAO,
                 carDAO,
@@ -45,7 +45,7 @@ public class Main {
             switch (choice) {
                 case 1 -> {
                     System.out.println("Booking car, select id from available cars");
-                    System.out.println(Arrays.toString(carBookingService.getAllCars()));
+                    System.out.println(carBookingService.getAllCars());
                     System.out.print("Selected car id: ");
                     String carId = in.next();
 
@@ -56,7 +56,7 @@ public class Main {
                     }
                     Car car = carMaybe.get();
 
-                    System.out.println(Arrays.toString(carBookingService.getAllUsers()));
+                    System.out.println(carBookingService.getAllUsers());
                     System.out.print("User id: ");
                     String userId = in.next();
 
@@ -71,24 +71,16 @@ public class Main {
                     System.out.println(car.getBrand() + " booked for " + user.getName() + " ✅");
                 }
                 case 2 -> {
-                    System.out.println(Arrays.toString(carBookingService.getAllUsers()));
+                    System.out.println(carBookingService.getAllUsers());
                     System.out.print("User id: ");
                     String id = in.next();
                     System.out.println("Cars booked by " + carBookingService.getUserById(id) + " :");
-                    System.out.println(Arrays.toString(carBookingService.getAllCarBookedByUser(id)));
+                    System.out.println(carBookingService.getAllCarBookedByUser(id));
                 }
-                case 3 -> {
-                    System.out.println("All bookings: \n" + Arrays.toString(carBookingService.getAllBookings()));
-                }
-                case 4 -> {
-                    System.out.println("All cars: \n" + Arrays.toString(carBookingService.getAllCars()));
-                }
-                case 5 -> {
-                    System.out.println("All electric cars: \n" + Arrays.toString(carBookingService.getAllElectricCars()));
-                }
-                case 6 -> {
-                    System.out.println("All Users: \n" + Arrays.toString(carBookingService.getAllUsers()));
-                }
+                case 3 -> System.out.println("All bookings: \n" + carBookingService.getAllBookings());
+                case 4 -> System.out.println("All cars: \n" + carBookingService.getAllCars());
+                case 5 -> System.out.println("All electric cars: \n" + carBookingService.getAllElectricCars());
+                case 6 -> System.out.println("All Users: \n" + carBookingService.getAllUsers());
                 case 7 -> {
                     System.out.println("Bye 👋");
                     System.exit(0);

@@ -3,16 +3,17 @@ package dao.cardao;
 import enums.Brand;
 import models.car.Car;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CarDAO {
 
-    private Car[] availableCars;
+    private final List<Car> availableCars;
 
     public CarDAO() {
-        availableCars = new Car[]{
+        availableCars = List.of(
                 new Car(Brand.FERRARI),
                 new Car(Brand.FORD),
                 new Car(Brand.MCBC),
@@ -22,38 +23,26 @@ public class CarDAO {
                 new Car(Brand.MCBC, true),
                 new Car(Brand.MCBC, true),
                 new Car(Brand.TOYOTA, true),
-                new Car(Brand.TATA, true),
-        };
+                new Car(Brand.TATA, true)
+        );
+
     }
 
-    public Optional<Car> getCarById(String id){
+    public Optional<Car> getCarById(String id) {
         UUID uuid = UUID.fromString(id);
 
-        for (Car car: availableCars){
-            if(car.getId().equals(uuid)) return Optional.of(car);
-        }
-
-        return Optional.empty();
+        return availableCars.stream()
+                .filter(car -> car.getId().equals(uuid))
+                .findFirst();
     }
 
-    public Car[] getAllCars(){
+    public List<Car> getAllCars() {
         return availableCars;
     }
 
-    public Car[] getAllElectricCars(){
-        int count = 0;
-        for (Car car: availableCars){
-            if(car.isElectric()) count++;
-        }
-
-        int ptr = 0;
-        Car[] electricCar = new Car[count];
-        for (Car car: availableCars){
-            if(car.isElectric()){
-                electricCar[ptr++] = car;
-            }
-        }
-
-        return electricCar;
+    public List<Car> getAllElectricCars() {
+        return availableCars.stream()
+                .filter(Car::isElectric)
+                .collect(Collectors.toList());
     }
 }

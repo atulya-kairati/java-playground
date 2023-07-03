@@ -4,6 +4,7 @@ import models.booking.Booking;
 import models.car.Car;
 import models.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CarBookingService {
@@ -11,17 +12,17 @@ public interface CarBookingService {
 
     Optional<Booking> getBookingById(String id);
 
-    Booking[] getAllBookings();
+    List<Booking> getAllBookings();
 
-    Car[] getAllCarBookedByUser(String userId);
+    List<Car> getAllCarBookedByUser(String userId);
 
     Optional<Car> getCarById(String id);
 
-    Car[] getAllCars();
+    List<Car> getAllCars();
 
-    Car[] getAllElectricCars();
+    List<Car> getAllElectricCars();
 
     Optional<User> getUserById(String id);
 
-    User[] getAllUsers();
+    List<User> getAllUsers();
 }
