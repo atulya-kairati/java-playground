@@ -1,6 +1,7 @@
 import dao.bookingdao.BookingDAO;
 import dao.cardao.CarDAO;
 import dao.userdao.UserDAO;
+import dao.userdao.UserDAOFaker;
 import dao.userdao.UserDAOFromCSV;
 import models.car.Car;
 import models.user.User;
@@ -14,7 +15,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner((System.in));
 
-        UserDAO userDAO = new UserDAOFromCSV();
+//        UserDAO userDAO = new UserDAOFromCSV();
+        UserDAO userDAO = new UserDAOFaker();
         CarDAO carDAO = new CarDAO();
         BookingDAO bookingDAO = new BookingDAO();
 

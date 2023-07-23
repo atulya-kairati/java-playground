@@ -16,7 +16,8 @@ public class UserDAOFromCSV implements UserDAO {
 
     @Override
     public void loadUsers() {
-        File file = new File("users.csv");
+        String csvResourcePath = getClass().getClassLoader().getResource("users.csv").getPath();
+        File file = new File(csvResourcePath);
 
         try (Scanner fileScanner = new Scanner(file)) {
             while (fileScanner.hasNext()){
