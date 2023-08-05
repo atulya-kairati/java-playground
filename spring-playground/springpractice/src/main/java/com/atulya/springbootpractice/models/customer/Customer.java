@@ -1,11 +1,22 @@
 package com.atulya.springbootpractice.models.customer;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+
+@Entity
 public class Customer {
+
+    @Id
+    @SequenceGenerator(name = "customer_id_sequence", sequenceName = "customer_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_sequence")
     int id;
+    @Column(nullable = false)
     String name;
+    @Column(nullable = false)
     String mail;
+    @Column(nullable = false)
     int age;
 
     public Customer() {
@@ -66,11 +77,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", mail='" + mail + '\'' +
-                ", age=" + age +
-                '}';
+        return "Customer{" + "id=" + id + ", name='" + name + '\'' + ", mail='" + mail + '\'' + ", age=" + age + '}';
     }
 }

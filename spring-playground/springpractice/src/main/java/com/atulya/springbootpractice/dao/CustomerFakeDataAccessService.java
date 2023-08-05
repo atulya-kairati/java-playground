@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class CustomerDaoImpl implements CustomerDao {
+@Repository("fake") // annotation is used to mark the DAO classes, so that spring can do DI
+public class CustomerFakeDataAccessService implements CustomerDao {
 
     static List<Customer> customers = new ArrayList<>();
 
