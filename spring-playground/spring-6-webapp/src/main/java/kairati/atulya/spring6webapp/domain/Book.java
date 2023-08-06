@@ -16,7 +16,7 @@ public class Book {
     private String name;
     private String isbn;
 
-    @ManyToMany
+    @ManyToMany // many books to many authors
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),

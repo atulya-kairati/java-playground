@@ -17,7 +17,7 @@ public class Publisher {
     private String zipCode;
 
 
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(mappedBy = "publisher") // one publisher to many books
     private Set<Book> books = new HashSet<>();
 
     public Publisher() {
@@ -73,6 +73,12 @@ public class Publisher {
         return Objects.hash(id);
     }
 
+
+    /**
+     * TIP: Never include properties that has a reference of a property of current class type
+     * It might cause a stackoverflow error.
+     * Since [Publisher] contains a list of [Book] and [Book] has a [Publisher]
+     */
     @Override
     public String toString() {
         return "Publisher{" +
