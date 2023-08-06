@@ -11,7 +11,7 @@ import java.util.Random;
 
 @Configuration
 public class Config {
-
+    // example on how to make beans
     @Bean(name = "random")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     // @RequestScope

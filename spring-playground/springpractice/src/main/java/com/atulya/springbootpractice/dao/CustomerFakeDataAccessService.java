@@ -29,4 +29,9 @@ public class CustomerFakeDataAccessService implements CustomerDao {
                 .filter((c) -> c.getId() == customerId)
                 .findFirst();
     }
+
+    @Override
+    public void insertCustomer(Customer customer) {
+//        TODO("Unimplemented")
+    }
 }

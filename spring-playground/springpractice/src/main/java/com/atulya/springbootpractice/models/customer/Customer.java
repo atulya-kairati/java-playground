@@ -14,7 +14,7 @@ public class Customer {
     int id;
     @Column(nullable = false)
     String name;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String mail;
     @Column(nullable = false)
     int age;

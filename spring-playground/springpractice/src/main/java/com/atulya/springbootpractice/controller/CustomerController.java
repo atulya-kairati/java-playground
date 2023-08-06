@@ -3,10 +3,7 @@ package com.atulya.springbootpractice.controller;
 import com.atulya.springbootpractice.models.customer.Customer;
 import com.atulya.springbootpractice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,11 @@ public class CustomerController {
             @PathVariable("customerId") int customerId
     ) {
         return service.getCustomerById(customerId);
+    }
+
+    @PostMapping(value = "/customers")
+    public void insertCustomer(@RequestBody Customer customer){
+        System.out.println(customer);
+        service.insertCustomer(customer);
     }
 }

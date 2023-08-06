@@ -1,10 +1,11 @@
 package com.atulya.springbootpractice.service;
 
 import com.atulya.springbootpractice.dao.CustomerDao;
+import com.atulya.springbootpractice.exceptions.DuplicateMail;
 import com.atulya.springbootpractice.exceptions.ResourceNotFound;
 import com.atulya.springbootpractice.models.customer.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerDao customerDao; // this will be injected by spring
 
-//    @Autowired // will work without constructor if used
+    //    @Autowired // will work without constructor if used
     private Random random;
 
     public CustomerServiceImpl(
@@ -36,5 +37,16 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerDao.getCustomerById(customerId)
                 .orElseThrow(() -> new ResourceNotFound("Customer not found"));
+    }
+
+    @Override
+    public void insertCustomer(Customer customer) {
+        try {
+            customerDao.insertCustomer(customer);
+        }
+        catch (DataIntegrityViolationException dive) {
+            dive.printStackTrace();
+            throw new DuplicateMail("Mail already exists");
+        }
     }
 }
