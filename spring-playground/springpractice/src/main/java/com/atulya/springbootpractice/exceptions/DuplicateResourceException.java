@@ -4,10 +4,10 @@ package com.atulya.springbootpractice.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class DuplicateMail extends RuntimeException {
+@ResponseStatus(HttpStatus.CONFLICT)
+public class DuplicateResourceException extends RuntimeException {
 
-    public DuplicateMail(String message) {
+    public DuplicateResourceException(String message) {
         super(message);
     }
 }

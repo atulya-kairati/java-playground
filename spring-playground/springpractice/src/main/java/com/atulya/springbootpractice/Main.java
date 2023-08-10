@@ -43,7 +43,7 @@ public class Main {
                     )
             );
 
-//            repository.saveAll(cunts);
+            repository.saveAll(cunts);
         };
 
     }

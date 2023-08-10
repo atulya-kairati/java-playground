@@ -1,6 +1,7 @@
 package com.atulya.springbootpractice.controller;
 
 import com.atulya.springbootpractice.models.customer.Customer;
+import com.atulya.springbootpractice.models.customer.CustomerRegistrationRequest;
 import com.atulya.springbootpractice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class CustomerController {
         return service.getAllCustomers();
     }
 
-    @GetMapping(value = "customers/{customerId}")
+    @GetMapping(value = "/customers/{customerId}")
     public Customer getCustomerById(
             @PathVariable("customerId") int customerId
     ) {
@@ -29,8 +30,23 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/customers")
-    public void insertCustomer(@RequestBody Customer customer){
-        System.out.println(customer);
-        service.insertCustomer(customer);
+    public void insertCustomer(@RequestBody CustomerRegistrationRequest crr) {
+        System.out.println(crr);
+        service.insertCustomer(crr);
+    }
+
+    @DeleteMapping("/customers/{customerId}")
+    public void deleteCustomerById(
+            @PathVariable int customerId
+    ) {
+        service.deleteCustomerById(customerId);
+    }
+
+    @PutMapping("/customers/{customerId}")
+    public void updateCustomerById(
+            @PathVariable int customerId,
+            @RequestBody CustomerRegistrationRequest crr
+    ){
+        service.updateCustomerById(customerId, crr);
     }
 }

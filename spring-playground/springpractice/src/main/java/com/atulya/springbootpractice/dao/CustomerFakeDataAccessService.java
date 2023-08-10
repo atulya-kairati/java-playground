@@ -34,4 +34,33 @@ public class CustomerFakeDataAccessService implements CustomerDao {
     public void insertCustomer(Customer customer) {
 //        TODO("Unimplemented")
     }
+
+    @Override
+    public boolean existCustomerByEmail(String mail) {
+        return customers.stream().anyMatch(c -> c.getMail() == mail);
+    }
+
+    @Override
+    public boolean existCustomerById(int id) {
+        return customers.stream().anyMatch(c -> id == c.getId());
+    }
+
+    @Override
+    public void deleteCustomerById(int id) {
+        customers.stream()
+                .filter(c -> id == c.getId())
+                .findFirst()
+                .ifPresent(customers::remove);
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customers.stream()
+                .filter(c -> customer.getId() == c.getId())
+                .findFirst().ifPresent(c -> {
+                    c.setName(customer.getName());
+                    c.setMail(customer.getMail());
+                    c.setAge(customer.getAge());
+                });
+    }
 }
