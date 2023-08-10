@@ -93,9 +93,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer customer = new Customer(
                 id,
-                Optional.ofNullable(crr.name()).orElseGet(() -> existingCustomer.getName()),
-                Optional.ofNullable(crr.mail()).orElseGet(() -> existingCustomer.getMail()),
-                Optional.ofNullable(crr.age()).orElseGet(() -> existingCustomer.getAge())
+                Optional.ofNullable(crr.name()).orElseGet(existingCustomer::getName),
+                Optional.ofNullable(crr.mail()).orElseGet(existingCustomer::getMail),
+                Optional.ofNullable(crr.age()).orElseGet(existingCustomer::getAge)
         );
 
         if (customer.equals(existingCustomer)) {
