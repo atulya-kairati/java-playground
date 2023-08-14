@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(int customerId) {
+    public Customer getCustomerById(long customerId) {
 
         return customerDao.getCustomerById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomerById(int id) {
+    public void deleteCustomerById(long id) {
 
         if (!customerDao.existCustomerById(id)) {
             throw new ResourceNotFoundException("Customer with id %d doesn't exist".formatted(id));
@@ -62,7 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomerById(int id, CustomerRegistrationRequest crr) {
+    public void updateCustomerById(long id, CustomerRegistrationRequest crr) {
 
         // check that customer exists
         if (!customerDao.existCustomerById(id)) {
@@ -83,12 +83,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 /*
-        Customer customer = new Customer(
-                id,
-                (crr.name() != null) ? crr.name() : existingCustomer.getName(),
-                (crr.mail() != null) ? crr.mail() : existingCustomer.getMail(),
-                (crr.age() != null) ? crr.age() : existingCustomer.getAge()
-        );
+//        Customer customer = new Customer(
+//                id,
+//                (crr.name() != null) ? crr.name() : existingCustomer.getName(),
+//                (crr.mail() != null) ? crr.mail() : existingCustomer.getMail(),
+//                (crr.age() != null) ? crr.age() : existingCustomer.getAge()
+//        );
 */
 
         Customer customer = new Customer(
@@ -101,6 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.equals(existingCustomer)) {
             throw new DuplicateResourceException("No data changed");
         }
+
         customerDao.updateCustomer(customer);
     }
 }

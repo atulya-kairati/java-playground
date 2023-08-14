@@ -6,15 +6,28 @@ import java.util.Objects;
 
 
 @Entity
+@Table(
+        name = "customer",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "constraint_unique_mail",
+                        columnNames = "mail"
+                )
+        }
+)
 public class Customer {
 
     @Id
-    @SequenceGenerator(name = "customer_id_sequence", sequenceName = "customer_id_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_sequence")
-    int id;
+    @SequenceGenerator(
+            name = "customer_id_seq",
+            sequenceName = "customer_id_seq",
+            allocationSize = 1 // default is 50 which mismatches with the db and causes error
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq")
+    long id;
     @Column(nullable = false)
     String name;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     String mail;
     @Column(nullable = false)
     int age;
@@ -22,7 +35,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String name, String mail, int age) {
+    public Customer(long id, String name, String mail, int age) {
         this.id = id;
         this.name = name;
         this.mail = mail;
@@ -35,11 +48,11 @@ public class Customer {
         this.age = age;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

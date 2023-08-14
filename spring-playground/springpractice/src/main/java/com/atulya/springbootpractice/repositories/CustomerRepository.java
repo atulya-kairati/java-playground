@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 // @Repository // is optional here
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     // JPA Query DSL
     boolean existsCustomerByMail(String mail);

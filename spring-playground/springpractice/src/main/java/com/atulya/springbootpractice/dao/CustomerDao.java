@@ -9,15 +9,15 @@ import java.util.Optional;
 public interface CustomerDao {
 
     List<Customer> getAllCustomers();
-    Optional<Customer> getCustomerById(int id);
+    Optional<Customer> getCustomerById(long id);
 
     void insertCustomer(Customer customer);
 
     boolean existCustomerByEmail(String mail);
 
-    boolean existCustomerById(int id);
+    boolean existCustomerById(long id);
 
-    void deleteCustomerById(int id);
+    void deleteCustomerById(long id);
 
     void updateCustomer(Customer customer);
 }

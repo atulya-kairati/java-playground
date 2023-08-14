@@ -22,7 +22,7 @@ public class CustomerJPADataAccessService implements CustomerDao{
     }
 
     @Override
-    public Optional<Customer> getCustomerById(int id) {
+    public Optional<Customer> getCustomerById(long id) {
         return customerRepository.findById(id);
     }
 
@@ -37,12 +37,12 @@ public class CustomerJPADataAccessService implements CustomerDao{
     }
 
     @Override
-    public boolean existCustomerById(int id) {
+    public boolean existCustomerById(long id) {
         return customerRepository.existsById(id);
     }
 
     @Override
-    public void deleteCustomerById(int id) {
+    public void deleteCustomerById(long id) {
         customerRepository.deleteById(id);
     }
 

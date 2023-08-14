@@ -24,7 +24,7 @@ public class CustomerController {
 
     @GetMapping(value = "/customers/{customerId}")
     public Customer getCustomerById(
-            @PathVariable("customerId") int customerId
+            @PathVariable("customerId") long customerId
     ) {
         return service.getCustomerById(customerId);
     }
@@ -37,14 +37,14 @@ public class CustomerController {
 
     @DeleteMapping("/customers/{customerId}")
     public void deleteCustomerById(
-            @PathVariable int customerId
+            @PathVariable long customerId
     ) {
         service.deleteCustomerById(customerId);
     }
 
     @PutMapping("/customers/{customerId}")
     public void updateCustomerById(
-            @PathVariable int customerId,
+            @PathVariable long customerId,
             @RequestBody CustomerRegistrationRequest crr
     ){
         service.updateCustomerById(customerId, crr);

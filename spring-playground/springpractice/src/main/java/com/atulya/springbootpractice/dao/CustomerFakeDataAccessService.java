@@ -23,7 +23,7 @@ public class CustomerFakeDataAccessService implements CustomerDao {
     }
 
     @Override
-    public Optional<Customer> getCustomerById(int customerId) {
+    public Optional<Customer> getCustomerById(long customerId) {
 
         return customers.stream()
                 .filter((c) -> c.getId() == customerId)
@@ -41,12 +41,12 @@ public class CustomerFakeDataAccessService implements CustomerDao {
     }
 
     @Override
-    public boolean existCustomerById(int id) {
+    public boolean existCustomerById(long id) {
         return customers.stream().anyMatch(c -> id == c.getId());
     }
 
     @Override
-    public void deleteCustomerById(int id) {
+    public void deleteCustomerById(long id) {
         customers.stream()
                 .filter(c -> id == c.getId())
                 .findFirst()
