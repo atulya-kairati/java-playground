@@ -35,7 +35,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- For database -->
+        <!-- For database: start -->
         <!-- Postgres driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -49,7 +49,7 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- JDBC -->
+        <!-- JDBC template -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -61,13 +61,45 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!-- XX -->
+        <!-- For database: end -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- javafaker -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- For Testcontainer: start -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- dependency for a particular DB to be represented in the Testcontainer -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <!-- <artifactId>[DB NAME]</artifactId> -->
+            <artifactId>postgresql</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- For Testcontainer: end -->
 
     </dependencies>
 

@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 
+/**
+ * ALL the annotation
+ * are only need by JPA
+ * NOT by JDBC
+ */
 @Entity
 @Table(
         name = "customer",

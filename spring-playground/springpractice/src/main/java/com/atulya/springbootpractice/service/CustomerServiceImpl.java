@@ -21,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final Random random;
 
     public CustomerServiceImpl(
-            @Qualifier("jpa") CustomerDao customerDao,
+            @Qualifier("jdbc") CustomerDao customerDao,
             Random random
     ) {
         this.customerDao = customerDao;
