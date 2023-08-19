@@ -1,6 +1,6 @@
 package com.atulya.springbootpractice.dao;
 
-import com.atulya.springbootpractice.mappers.Mapper;
+import com.atulya.springbootpractice.mappers.CustomerRowMapper;
 import com.atulya.springbootpractice.models.customer.Customer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,10 +12,12 @@ import java.util.Optional;
 public class CustomerJDBCDataAccessService implements CustomerDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final CustomerRowMapper customerRowMapper;
 
     // the application context already contains a bean of JdbcTemplate which will be injected here
-    public CustomerJDBCDataAccessService(JdbcTemplate jdbcTemplate) {
+    public CustomerJDBCDataAccessService(JdbcTemplate jdbcTemplate, CustomerRowMapper customerRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.customerRowMapper = customerRowMapper;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 FROM customer;
                 """;
 
-        List<Customer> customers = jdbcTemplate.query(selectSQL, Mapper.customerRowMapper);
+        List<Customer> customers = jdbcTemplate.query(selectSQL, customerRowMapper);
 
         return customers;
     }
@@ -40,7 +42,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 """;
 
         return jdbcTemplate
-                .query(selectSQL, Mapper.customerRowMapper, id)
+                .query(selectSQL, customerRowMapper, id)
                 .stream()
                 .findFirst();
     }
@@ -70,7 +72,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 WHERE mail = ?
                 """;
 
-        return !jdbcTemplate.query(selectSQL, Mapper.customerRowMapper, mail).isEmpty();
+        return !jdbcTemplate.query(selectSQL, customerRowMapper, mail).isEmpty();
     }
 
     @Override
@@ -80,7 +82,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 WHERE id = ?
                 """;
 
-        return !jdbcTemplate.query(selectSQL, Mapper.customerRowMapper, id).isEmpty();
+        return !jdbcTemplate.query(selectSQL, customerRowMapper, id).isEmpty();
     }
 
     @Override

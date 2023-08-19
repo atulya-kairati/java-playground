@@ -1,15 +1,21 @@
 package com.atulya.springbootpractice.mappers;
 
+
 import com.atulya.springbootpractice.models.customer.Customer;
 import org.springframework.jdbc.core.RowMapper;
 
-public class Mapper {
-    public static RowMapper<Customer> customerRowMapper = (rs, rowNum) -> {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+public class CustomerRowMapper implements RowMapper<Customer> {
+    @Override
+    public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Customer(
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("mail"),
                 rs.getInt("age")
         );
-    };
+    }
 }
