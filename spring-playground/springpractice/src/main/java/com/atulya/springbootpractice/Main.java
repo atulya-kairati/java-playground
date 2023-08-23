@@ -38,7 +38,6 @@ public class Main {
             for (int i = 0; i < noOfCunts; i++) {
                 Random random = new Random(System.currentTimeMillis());
                 Faker faker = new Faker(random);
-
                 Customer cunt = new Customer(
                         faker.name().fullName(),
                         faker.internet().emailAddress(),
