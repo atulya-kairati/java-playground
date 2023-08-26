@@ -2,8 +2,6 @@ package com.atulya.springbootpractice.repositories;
 
 import com.atulya.springbootpractice.AbstractTestContainers;
 import com.atulya.springbootpractice.models.customer.Customer;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,12 +22,6 @@ class CustomerRepositoryTest extends AbstractTestContainers {
 
     @Autowired
     CustomerRepository underTest;
-
-
-    @BeforeAll
-    void setUp(){
-        underTest.deleteAll(); // clear the DB (since we are adding 2 Customers everytime Spring starts)
-    }
 
     @Test
     void existsCustomerByMail() {

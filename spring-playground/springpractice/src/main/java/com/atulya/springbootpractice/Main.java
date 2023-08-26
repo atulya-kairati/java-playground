@@ -43,12 +43,9 @@ public class Main {
                         faker.internet().emailAddress(),
                         random.nextInt(100)
                 );
-
                 cunts.add(cunt);
             }
-
             repository.saveAll(cunts);
         };
-
     }
 }
