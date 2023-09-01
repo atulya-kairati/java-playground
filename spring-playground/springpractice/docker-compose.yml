@@ -14,6 +14,25 @@ services:
       - db
     restart: unless-stopped
 
+# our own image
+  springpractice:
+    container_name: springpractice_container
+    image: 4ager/springpractice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/customer # To override spring.datasource.url
+    ports:
+      - "8080:8000" # exposed:internal
+    networks:
+      - db # use db network
+    depends_on:
+      - db # start db service before this
+    restart: unless-stopped
+
+    ## We can mention extra commands (instead we specify this in environment)
+#    command:
+#      - --spring.datasource.url=jdbc:postgresql://db:5432/customer
+
+
 networks:
   db:
     driver: bridge
