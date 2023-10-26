@@ -103,5 +103,6 @@ public class BeerServiceImpl implements BeerService {
             existingBeer.setPrice(beerAttributes.price());
         }
 
+        existingBeer.setUpdateDate(LocalDateTime.now());
     }
 }

@@ -13,8 +13,8 @@ import java.net.URI;
 import java.util.List;
 
 
-@Slf4j
-@AllArgsConstructor // generate all args constructor
+@Slf4j // logger from lombok
+@AllArgsConstructor // generate all args constructor for the properties
 @RestController()
 @RequestMapping("/api/v1/beer")
 public class BeerController {
@@ -56,7 +56,7 @@ public class BeerController {
     }
 
     @DeleteMapping("/{beerId}")
-    public ResponseEntity<String> DeleteBeerById(
+    public ResponseEntity<String> deleteBeerById(
             @PathVariable("beerId") Integer id
     ) {
 

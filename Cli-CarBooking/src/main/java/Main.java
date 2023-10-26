@@ -2,7 +2,6 @@ import dao.bookingdao.BookingDAO;
 import dao.cardao.CarDAO;
 import dao.userdao.UserDAO;
 import dao.userdao.UserDAOFaker;
-import dao.userdao.UserDAOFromCSV;
 import models.car.Car;
 import models.user.User;
 import service.carbookingservice.CarBookingService;
