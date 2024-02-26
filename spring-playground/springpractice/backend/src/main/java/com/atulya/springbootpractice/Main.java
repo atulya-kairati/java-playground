@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Main {
 
     // runs whenever the application is started
     @Bean
-    CommandLineRunner runner(CustomerRepository repository) {
+    CommandLineRunner runner(CustomerRepository repository, PasswordEncoder passwordEncoder) {
         return args -> {
 
             int noOfCunts = 2;
@@ -41,8 +42,9 @@ public class Main {
                 Customer cunt = new Customer(
                         faker.name().fullName(),
                         faker.internet().emailAddress(),
-                        random.nextInt(100)
-                );
+                        random.nextInt(100),
+                        faker.demographic().sex().toLowerCase(),
+                        passwordEncoder.encode(faker.internet().password()));
                 cunts.add(cunt);
             }
             repository.saveAll(cunts);

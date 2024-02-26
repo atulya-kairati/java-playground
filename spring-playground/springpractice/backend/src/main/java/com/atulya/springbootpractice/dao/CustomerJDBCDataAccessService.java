@@ -24,7 +24,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     public List<Customer> getAllCustomers() {
 
         String selectSQL = """
-                SELECT id, name, mail, age
+                SELECT id, name, mail, age, gender, password
                 FROM customer;
                 """;
 
@@ -36,7 +36,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> getCustomerById(long id) {
         String selectSQL = """
-                SELECT id, name, mail, age
+                SELECT id, name, mail, age, gender, password
                 FROM customer
                 WHERE id = ?
                 """;
@@ -50,15 +50,17 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public void insertCustomer(Customer customer) {
         String insertSQL = """
-                INSERT INTO customer (name, mail, age)
-                VALUES (?, ?, ?);
+                INSERT INTO customer (name, mail, age, gender, password)
+                VALUES (?, ?, ?, ?, ?);
                 """;
 
         int linesUpdated = jdbcTemplate.update(
                 insertSQL,
                 customer.getName(),
                 customer.getMail(),
-                customer.getAge()
+                customer.getAge(),
+                customer.getGender(),
+                customer.getPassword()
         );
 
         System.out.println("Lines updated during insert customer: " + linesUpdated);
@@ -102,7 +104,9 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 SET
                 name = ?,
                 mail = ?,
-                age = ?
+                age = ?,
+                gender = ?,
+                password = ?
                 WHERE id = ?
                 """;
 
@@ -111,7 +115,23 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 customer.getName(),
                 customer.getMail(),
                 customer.getAge(),
+                customer.getGender(),
+                customer.getPassword(),
                 customer.getId()
         );
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByMail(String mail) {
+        String selectSQL = """
+                SELECT id, name, mail, age, gender, password
+                FROM customer
+                WHERE mail = ?
+                """;
+
+        return jdbcTemplate
+                .query(selectSQL, customerRowMapper, mail)
+                .stream()
+                .findFirst();
     }
 }

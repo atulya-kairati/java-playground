@@ -1,9 +1,12 @@
 package com.atulya.springbootpractice.controller;
 
+import com.atulya.springbootpractice.exceptions.DuplicateResourceException;
+import com.atulya.springbootpractice.jwt.JWTUtils;
 import com.atulya.springbootpractice.models.customer.Customer;
 import com.atulya.springbootpractice.models.customer.CustomerRegistrationRequest;
 import com.atulya.springbootpractice.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +16,14 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class CustomerController {
 
-    @Autowired
-    private CustomerService service;
+    private final CustomerService service;
+
+    private final JWTUtils jwtUtils;
+
+    public CustomerController(CustomerService service, JWTUtils jwtUtils) {
+        this.service = service;
+        this.jwtUtils = jwtUtils;
+    }
 
 
     @GetMapping(value = "/customers")
@@ -30,9 +39,14 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/customers")
-    public void insertCustomer(@RequestBody CustomerRegistrationRequest crr) {
+    public ResponseEntity<?> insertCustomer(@RequestBody CustomerRegistrationRequest crr) {
         System.out.println(crr);
         service.insertCustomer(crr);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtUtils.issueToken(crr.mail(), "ROLE_USER"))
+                .build();
     }
 
     @DeleteMapping("/customers/{customerId}")
@@ -46,7 +60,7 @@ public class CustomerController {
     public void updateCustomerById(
             @PathVariable long customerId,
             @RequestBody CustomerRegistrationRequest crr
-    ){
+    ) {
         service.updateCustomerById(customerId, crr);
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest // to get JPA repository and the components it needs
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // disable use of embedded DB
+@Import({TestConfig.class})
 class CustomerRepositoryTest extends AbstractTestContainers {
 
     @Autowired
@@ -28,8 +30,9 @@ class CustomerRepositoryTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.save(customer);
 
@@ -40,7 +43,7 @@ class CustomerRepositoryTest extends AbstractTestContainers {
     }
 
     @Test
-    void noSuchMailExistsCustomerByMail(){
+    void noSuchMailExistsCustomerByMail() {
         String mail = FAKER.internet().emailAddress() + UUID.randomUUID();
 
         boolean result = underTest.existsCustomerByMail(mail);

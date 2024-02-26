@@ -14,7 +14,7 @@ services:
       - db
     restart: unless-stopped
 
-# our own image
+# our own image for backend
   springpractice:
     container_name: springpractice_container
     image: 4ager/springpractice
@@ -31,6 +31,21 @@ services:
     ## We can mention extra commands (instead we specify this in environment)
 #    command:
 #      - --spring.datasource.url=jdbc:postgresql://db:5432/customer
+
+  ## FRONTEND
+  react-frontend:
+    container_name: react-frontend
+    image: 4ager/react-frontend
+    build:
+      context: frontend/react-frontend
+      dockerfile: Dockerfile
+      args:
+        api_base_url: http://localhost:8080
+    ports:
+      - "3000:5173"
+    depends_on:
+      - springpractice
+    restart: unless-stopped
 
 
 networks:

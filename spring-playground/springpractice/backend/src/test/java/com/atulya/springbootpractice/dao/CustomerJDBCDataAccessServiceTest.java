@@ -32,8 +32,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -48,8 +49,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -85,8 +87,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -109,8 +112,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -133,8 +137,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -165,8 +170,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 
@@ -190,8 +196,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().emailAddress() + UUID.randomUUID(), // making sure email is unique
-                FAKER.number().numberBetween(18, 100)
-        );
+                FAKER.number().numberBetween(18, 100),
+                FAKER.demographic().sex(),
+                "password");
 
         underTest.insertCustomer(customer);
 

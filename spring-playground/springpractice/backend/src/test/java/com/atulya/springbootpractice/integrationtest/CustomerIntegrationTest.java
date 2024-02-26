@@ -35,7 +35,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 faker.name().fullName(),
                 faker.internet().emailAddress("test" + UUID.randomUUID()),
-                faker.random().nextInt(100)
+                "password", faker.random().nextInt(100),
+                faker.demographic().sex()
         );
 
         // send a request to the registration endpoint
@@ -66,8 +67,9 @@ public class CustomerIntegrationTest {
         Customer expectedCustomer = new Customer(
                 request.name(),
                 request.mail(),
-                request.age()
-        );
+                request.age(),
+                request.gender(),
+                "password");
 
 
         // make sure that the customer we registered exists
@@ -105,7 +107,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 faker.name().fullName(),
                 faker.internet().emailAddress("test" + UUID.randomUUID()),
-                faker.random().nextInt(100)
+                "password", faker.random().nextInt(100),
+                faker.demographic().sex()
         );
 
         // send a request to the registration endpoint
@@ -167,7 +170,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 faker.name().fullName(),
                 faker.internet().emailAddress("test" + UUID.randomUUID()),
-                faker.random().nextInt(100)
+                "password", faker.random().nextInt(100),
+                faker.demographic().sex()
         );
 
         // send a request to the registration endpoint
@@ -195,6 +199,7 @@ public class CustomerIntegrationTest {
 
 
         // getting customer by id
+        assert allCustomers != null;
         long id = allCustomers.stream()
                 .filter(c -> c.getMail().equals(request.mail()))
                 .findFirst()
@@ -205,7 +210,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest updateBody = new CustomerRegistrationRequest(
                 null,
                 null,
-                request.age() + 1
+                "password", request.age() + 1,
+                null
         );
 
         // update customer
@@ -223,7 +229,9 @@ public class CustomerIntegrationTest {
                 id,
                 request.name(),
                 request.mail(),
-                updateBody.age()
+                "password",
+                updateBody.age(),
+                request.gender()
         );
 
         webTestClient.get()

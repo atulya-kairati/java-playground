@@ -6,6 +6,7 @@ import com.atulya.springbootpractice.exceptions.ResourceNotFoundException;
 import com.atulya.springbootpractice.models.customer.Customer;
 import com.atulya.springbootpractice.models.customer.CustomerRegistrationRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +17,17 @@ import java.util.Random;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerDao customerDao; // this will be injected by spring
+    private final PasswordEncoder passwordEncoder;
 
     //    @Autowired // will work without constructor if used
     private final Random random;
 
     public CustomerServiceImpl(
-            @Qualifier("jdbc") CustomerDao customerDao,
+            @Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder,
             Random random
     ) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
         this.random = random;
     }
 
@@ -47,7 +50,15 @@ public class CustomerServiceImpl implements CustomerService {
             throw new DuplicateResourceException("Mail already exists");
         }
 
-        Customer customer = new Customer(crr.name(), crr.mail(), crr.age());
+        // TODO: Throw exception if any of the parameters are missing
+
+        Customer customer = new Customer(
+                crr.name(),
+                crr.mail(),
+                crr.age(),
+                crr.gender().toLowerCase(),
+                passwordEncoder.encode(crr.password())
+        );
         customerDao.insertCustomer(customer);
     }
 
@@ -95,7 +106,10 @@ public class CustomerServiceImpl implements CustomerService {
                 id,
                 Optional.ofNullable(crr.name()).orElseGet(existingCustomer::getName),
                 Optional.ofNullable(crr.mail()).orElseGet(existingCustomer::getMail),
-                Optional.ofNullable(crr.age()).orElseGet(existingCustomer::getAge)
+                Optional.ofNullable(crr.mail()).orElseGet(existingCustomer::getPassword),
+                Optional.ofNullable(crr.age()).orElseGet(existingCustomer::getAge),
+                Optional.ofNullable(crr.gender() == null ? null : crr.gender().toLowerCase())
+                        .orElseGet(existingCustomer::getGender)
         );
 
         if (customer.equals(existingCustomer)) {

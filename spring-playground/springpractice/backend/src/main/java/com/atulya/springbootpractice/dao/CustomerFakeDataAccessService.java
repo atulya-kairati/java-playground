@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository("fake") // annotation is used to mark the DAO classes, so that spring can do DI
@@ -13,8 +14,8 @@ public class CustomerFakeDataAccessService implements CustomerDao {
     static List<Customer> customers = new ArrayList<>();
 
     static {
-        customers.add(new Customer(1, "Manus", "Manus@mail.com", 24));
-        customers.add(new Customer(2, "Potas", "potas@mail.com", 27));
+        customers.add(new Customer(1, "Manus", "Manus@mail.com", "password", 24, "male"));
+        customers.add(new Customer(2, "Potas", "potas@mail.com", "password", 27, "chooter"));
     }
 
     @Override
@@ -37,7 +38,7 @@ public class CustomerFakeDataAccessService implements CustomerDao {
 
     @Override
     public boolean existCustomerByEmail(String mail) {
-        return customers.stream().anyMatch(c -> c.getMail() == mail);
+        return customers.stream().anyMatch(c -> Objects.equals(c.getMail(), mail));
     }
 
     @Override
@@ -61,6 +62,14 @@ public class CustomerFakeDataAccessService implements CustomerDao {
                     c.setName(customer.getName());
                     c.setMail(customer.getMail());
                     c.setAge(customer.getAge());
+                    c.setGender(customer.getGender());
                 });
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByMail(String mail) {
+        return customers.stream()
+                .filter((c) -> Objects.equals(c.getMail(), mail))
+                .findFirst();
     }
 }

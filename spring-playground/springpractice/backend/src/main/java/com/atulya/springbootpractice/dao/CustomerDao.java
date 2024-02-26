@@ -20,4 +20,6 @@ public interface CustomerDao {
     void deleteCustomerById(long id);
 
     void updateCustomer(Customer customer);
+
+    Optional<Customer> getCustomerByMail(String mail);
 }
