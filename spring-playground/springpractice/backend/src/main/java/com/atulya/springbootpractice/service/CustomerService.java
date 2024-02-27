@@ -1,18 +1,19 @@
 package com.atulya.springbootpractice.service;
 
 import com.atulya.springbootpractice.models.customer.Customer;
-import com.atulya.springbootpractice.models.customer.CustomerRegistrationRequest;
+import com.atulya.springbootpractice.models.customer.CustomerRegistrationDTO;
+import com.atulya.springbootpractice.models.customer.CustomerResponseDTO;
 
 import java.util.List;
 
 public interface CustomerService {
-    List<Customer> getAllCustomers();
+    List<CustomerResponseDTO> getAllCustomers();
 
-    Customer getCustomerById(long id);
+    CustomerResponseDTO getCustomerById(long id);
 
-    void insertCustomer(CustomerRegistrationRequest customerRegistrationRequest);
+    void insertCustomer(CustomerRegistrationDTO crDto);
 
     void deleteCustomerById(long id);
 
-    void updateCustomerById(long id, CustomerRegistrationRequest crr);
+    void updateCustomerById(long id, CustomerRegistrationDTO crDto);
 }

@@ -1,9 +1,9 @@
 package com.atulya.springbootpractice.controller;
 
-import com.atulya.springbootpractice.exceptions.DuplicateResourceException;
 import com.atulya.springbootpractice.jwt.JWTUtils;
 import com.atulya.springbootpractice.models.customer.Customer;
-import com.atulya.springbootpractice.models.customer.CustomerRegistrationRequest;
+import com.atulya.springbootpractice.models.customer.CustomerRegistrationDTO;
+import com.atulya.springbootpractice.models.customer.CustomerResponseDTO;
 import com.atulya.springbootpractice.service.CustomerService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +27,25 @@ public class CustomerController {
 
 
     @GetMapping(value = "/customers")
-    public List<Customer> getCustomers() {
+    public List<CustomerResponseDTO> getCustomers() {
         return service.getAllCustomers();
     }
 
     @GetMapping(value = "/customers/{customerId}")
-    public Customer getCustomerById(
+    public CustomerResponseDTO getCustomerById(
             @PathVariable("customerId") long customerId
     ) {
         return service.getCustomerById(customerId);
     }
 
     @PostMapping(value = "/customers")
-    public ResponseEntity<?> insertCustomer(@RequestBody CustomerRegistrationRequest crr) {
-        System.out.println(crr);
-        service.insertCustomer(crr);
+    public ResponseEntity<?> insertCustomer(@RequestBody CustomerRegistrationDTO crDto) {
+        System.out.println(crDto);
+        service.insertCustomer(crDto);
 
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.AUTHORIZATION, jwtUtils.issueToken(crr.mail(), "ROLE_USER"))
+                .header(HttpHeaders.AUTHORIZATION, jwtUtils.issueToken(crDto.mail(), "ROLE_USER"))
                 .build();
     }
 
@@ -59,8 +59,8 @@ public class CustomerController {
     @PutMapping("/customers/{customerId}")
     public void updateCustomerById(
             @PathVariable long customerId,
-            @RequestBody CustomerRegistrationRequest crr
+            @RequestBody CustomerRegistrationDTO crDto
     ) {
-        service.updateCustomerById(customerId, crr);
+        service.updateCustomerById(customerId, crDto);
     }
 }

@@ -1,6 +1,6 @@
 package com.atulya.springbootpractice.models.customer;
 
-public record CustomerRegistrationRequest(
+public record CustomerRegistrationDTO(
         String name,
         String mail,
         String password,

@@ -65,6 +65,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             System.out.println(">>> tokenValid" + tokenValid);
             if (tokenValid) {
 
+                // add user to the context
+
                 // Create UsernamePasswordAuthenticationToken
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
