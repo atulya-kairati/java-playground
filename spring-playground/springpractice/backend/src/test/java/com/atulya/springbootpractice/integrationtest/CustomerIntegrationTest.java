@@ -116,7 +116,7 @@ public class CustomerIntegrationTest {
         Faker faker = new Faker();
 
         // create a customer registration request
-        CustomerRegistrationDTO request = new CustomerRegistrationDTO(
+        CustomerRegistrationDTO customer = new CustomerRegistrationDTO(
                 faker.name().fullName(),
                 faker.internet().emailAddress("test" + UUID.randomUUID()),
                 "password", faker.random().nextInt(100),
@@ -128,7 +128,7 @@ public class CustomerIntegrationTest {
                 .uri(CUSTOMERS_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(request), CustomerRegistrationDTO.class)// parsing obj
+                .body(Mono.just(customer), CustomerRegistrationDTO.class)// parsing obj
                 .exchange() // send a req and gets a res
                 .expectStatus()
                 .isOk()
@@ -155,7 +155,7 @@ public class CustomerIntegrationTest {
         // getting customer by id
         assert allCustomers != null;
         long id = allCustomers.stream()
-                .filter(c -> c.mail().equals(request.mail()))
+                .filter(c -> c.mail().equals(customer.mail()))
                 .findFirst()
                 .orElseThrow()
                 .id();
@@ -171,14 +171,35 @@ public class CustomerIntegrationTest {
 
 
         // make sure the deleted Customer doesn't exist
-        // TODO: since we have deleted the customer hence we can't use its jwt
-//        webTestClient.get()
-//                .uri(CUSTOMERS_URI + "/{id}", id)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
-//                .exchange()
-//                .expectStatus()
-//                .isNotFound();
+        // since we have deleted the customer hence we can't use its jwt
+        // so we register a new customer and use its jwt
+
+        CustomerRegistrationDTO dummyCustomer = new CustomerRegistrationDTO(
+                faker.name().fullName(),
+                faker.internet().emailAddress("test" + UUID.randomUUID()),
+                "password", faker.random().nextInt(100),
+                faker.demographic().sex().toLowerCase()
+        );
+
+        String newJWT = webTestClient.post()
+                .uri(CUSTOMERS_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(dummyCustomer), CustomerRegistrationDTO.class)// parsing obj
+                .exchange()
+                .returnResult(Void.class)
+                .getResponseHeaders()
+                .get(HttpHeaders.AUTHORIZATION)
+                .get(0);
+
+
+        webTestClient.get()
+                .uri(CUSTOMERS_URI + "/{id}", id)
+                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + newJWT)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test

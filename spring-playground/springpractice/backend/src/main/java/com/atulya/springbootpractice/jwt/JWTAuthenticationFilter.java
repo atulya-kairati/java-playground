@@ -35,7 +35,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         // Extract the auth header
         String authHeader = request.getHeader("Authorization");
-        System.out.println(">>>" + authHeader);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             // move to next filter if no token is present
@@ -49,7 +48,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         // get subject
         String subject = jwtUtils.getSubject(jwt);
 
-        System.out.println(">>> subject" + subject);
 
 
         if (
@@ -62,7 +60,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
             // validate token
             boolean tokenValid = jwtUtils.isTokenValid(jwt, userDetails.getUsername());
-            System.out.println(">>> tokenValid" + tokenValid);
             if (tokenValid) {
 
                 // add user to the context
