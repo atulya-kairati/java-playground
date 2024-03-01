@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.time.Period;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,6 +23,9 @@ public class JWTUtils {
     }
 
     public String issueToken(String subject, String... scopes) {
+        return issueJWT(subject, Map.of("Scopes", scopes));
+    }
+    public String issueToken(String subject, List<String> scopes) {
         return issueJWT(subject, Map.of("Scopes", scopes));
     }
 

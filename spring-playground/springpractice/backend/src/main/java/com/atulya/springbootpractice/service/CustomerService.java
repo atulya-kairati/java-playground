@@ -1,6 +1,5 @@
 package com.atulya.springbootpractice.service;
 
-import com.atulya.springbootpractice.models.customer.Customer;
 import com.atulya.springbootpractice.models.customer.CustomerRegistrationDTO;
 import com.atulya.springbootpractice.models.customer.CustomerResponseDTO;
 
