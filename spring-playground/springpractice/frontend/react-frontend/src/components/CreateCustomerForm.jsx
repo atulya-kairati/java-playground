@@ -61,6 +61,7 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
           mail: "",
           age: 0,
           gender: "", // added for our select
+          password: "",
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -76,6 +77,7 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
           gender: Yup.string()
             .oneOf(["male", "female", "artificial", "other"], "Invalid Genda")
             .required("Required"),
+          password: Yup.string().min(6).required(),
         })}
         onSubmit={(customer, { setSubmitting }) => {
           postCustomer(customer)
@@ -123,6 +125,13 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
                 <option value="artificial">Artificial</option>
                 <option value="other">Other</option>
               </MySelect>
+
+              <MyTextInput
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Enter a secure password"
+              />
 
               <Button isDisabled={!isValid || isSubmitting} type="submit">
                 Submit

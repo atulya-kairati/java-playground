@@ -23,12 +23,12 @@ function App() {
   function fetchCustomers() {
     getAllCustomers()
       .catch((err) => {
-        errorNotification("Couldn't fetch cutomers", err.message);
+        errorNotification("Couldn't fetch cutomers", err.response.data.msg);
         setHasError(true);
       })
       .then((data) => {
         setDataState(data);
-        console.log(data);
+        // console.log(data);
       });
   }
 

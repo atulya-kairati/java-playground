@@ -25,6 +25,10 @@ public class CustomerController {
         this.jwtUtils = jwtUtils;
     }
 
+    @GetMapping("/whoami")
+    public CustomerResponseDTO currentCustomer(@RequestAttribute("currentCustomer") CustomerResponseDTO currentCustomer) {
+        return currentCustomer;
+    }
 
     @GetMapping(value = "/customers")
     public List<CustomerResponseDTO> getCustomers() {

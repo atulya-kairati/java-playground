@@ -130,6 +130,7 @@ public class Customer implements UserDetails {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
                 '}';

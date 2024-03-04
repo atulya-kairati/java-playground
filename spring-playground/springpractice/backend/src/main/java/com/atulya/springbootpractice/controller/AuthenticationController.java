@@ -30,7 +30,8 @@ public class AuthenticationController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, authenticationResponse.token())
-                .build();
+                .body(authenticationResponse.customer());
+//                .build();
     }
 
 }

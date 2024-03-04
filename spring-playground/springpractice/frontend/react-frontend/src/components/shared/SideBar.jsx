@@ -32,6 +32,8 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -120,6 +122,8 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const { customer, logOut } = useAuth();
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -176,9 +180,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">{customer?.name ?? "Nope"}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {customer?.roles.join(", ") ?? "Nope"}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
@@ -194,7 +198,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logOut}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

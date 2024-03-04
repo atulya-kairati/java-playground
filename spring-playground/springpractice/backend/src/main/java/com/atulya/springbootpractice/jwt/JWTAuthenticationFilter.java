@@ -1,5 +1,8 @@
 package com.atulya.springbootpractice.jwt;
 
+import com.atulya.springbootpractice.mappers.CustomerResponseDTOMapper;
+import com.atulya.springbootpractice.models.customer.Customer;
+import com.atulya.springbootpractice.models.customer.CustomerResponseDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,9 +24,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
-    public JWTAuthenticationFilter(JWTUtils jwtUtils, UserDetailsService userDetailsService) {
+    private final CustomerResponseDTOMapper responseDTOMapper;
+
+    public JWTAuthenticationFilter(
+            JWTUtils jwtUtils,
+            UserDetailsService userDetailsService
+    ) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
+        this.responseDTOMapper = new CustomerResponseDTOMapper();
     }
 
     @Override
@@ -47,8 +56,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         // get subject
         String subject = jwtUtils.getSubject(jwt);
-
-
 
         if (
                 subject != null && // subject is present
@@ -78,6 +85,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                // setting current customer in the request so it can be used by the controller
+                CustomerResponseDTO currentCustomer = responseDTOMapper.apply((Customer) userDetails);
+                request.setAttribute("currentCustomer", currentCustomer);
             }
         }
 
