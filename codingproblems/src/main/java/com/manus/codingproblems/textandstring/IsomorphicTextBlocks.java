@@ -1,15 +1,16 @@
-package text_and_string;
+package com.manus.codingproblems.textandstring;
+
 
 /**
  * Write a program that checks if two text blocks are isomorphic.
- * 
+ *
  * Text blocks are isomorphic if their strings are isomorphic
- * 
- * Two strings are considered isomorphic if we can map every 
- * character of the first string to every character of the second 
- * string in a one-to-one fashion 
+ *
+ * Two strings are considered isomorphic if we can map every
+ * character of the first string to every character of the second
+ * string in a one-to-one fashion
  * (for instance, "xxyznnxiz" and "aavurraqu" are isomorphic).
- * 
+ *
  * 1. essential white space characters should also be considered
  */
 import java.util.*;
@@ -17,10 +18,10 @@ import java.util.*;
 public class IsomorphicTextBlocks {
 
     static boolean isomorphicTextBlocks(String str1, String str2) {
-        
+
         if (str1 == null || str2 == null) return false;
         if (str1.length() != str2.length()) return false;
-        
+
         Map<Character, Character> matcher = new HashMap<>();
 
         for (int i = 0; i < str1.length(); i++) {
@@ -52,7 +53,7 @@ public class IsomorphicTextBlocks {
                 ifttknssnbkdtgssn""";
 
         // here { ' '=s, r=d, d=g, e=f, w=b, h=i, \n=n, l=t, o=k}
-        
+
         System.out.println(isomorphicTextBlocks(block1, block2));
     }
 }
