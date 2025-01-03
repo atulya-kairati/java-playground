@@ -1,4 +1,4 @@
-package text_and_string;
+package com.manus.codingproblems.textandstring;
 
 public class TextBlocks {
     public static void main(String[] args) {
@@ -9,8 +9,8 @@ public class TextBlocks {
             am
                 a
                 weirdo""";
-                // unintentional indentation will be string by the compiler
-                // unintentional indentation -> least no of white space (in this case the "am" line)
+        // unintentional indentation will be string by the compiler
+        // unintentional indentation -> least no of white space (in this case the "am" line)
 
         String block2 = """
                         But
@@ -19,7 +19,7 @@ public class TextBlocks {
                     being
                         weird
                 """; // these are also considered when striping white space
-                // And placing end quotes in a new line adds a \n
+        // And placing end quotes in a new line adds a \n
 
         String block3 = """
                 because \
@@ -33,7 +33,7 @@ public class TextBlocks {
         String block4 = """
                 \"""Manus Chaubey\"""  \s
                 """; // \""" can be used to escape """
-                    // \s can be used to preserve trailing whitespace
+        // \s can be used to preserve trailing whitespace
 
         // there can be no comments in text block
         // text blocks are essentially the same as string literals with better multiline supports
